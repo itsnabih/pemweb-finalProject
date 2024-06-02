@@ -10,14 +10,22 @@
     integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
     crossorigin="anonymous"
 ></script>
+<link rel="stylesheet" href="../contrast-bootstrap-pro/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../contrast-bootstrap-pro/css/cdb.css" />
+<script src="../contrast-bootstrap-pro/js/bootstrap.min.js"></script>
+<script
+    src="https://kit.fontawesome.com/9d1d9a82d2.js"
+    crossorigin="anonymous"
+></script>
+
 <style>
-    .chart-container1 {
+    .chart-container {
         width: 100%;
         margin: auto;
-        padding-top: 20px;
+        padding-top: 2px;
     }
     .chart-container2 {
-        width: 60%;
+        width: 100%;
         margin: auto;
         padding-top: 20px;
     }
@@ -51,6 +59,34 @@
         justify-content: center;
         align-items: center;
         margin-top: 10px;
+    }
+
+    .card {
+        margin-bottom: 20px;
+    }
+
+    .table thead th {
+        text-align: center;
+    }
+
+    .table tbody td {
+        text-align: center;
+    }
+
+    .badge {
+        font-size: 1em;
+    }
+    /* Adjust the size of the pie chart canvas */
+    .pie-chart-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100%; /* Increase the height for a larger pie chart */
+    }
+
+    .pie-chart-container canvas {
+        max-width: 100% !important;
+        max-height: 400% !important;
     }
 </style>
 <!-- searchbar, button search-->
@@ -161,114 +197,147 @@
 <div>
     <div class="container mt-5">
         <div class="row">
-            <h2 class="text-center">Statistik Penjualan</h2>
-            <div class="card-container">
-                <div class="chart-container1 card">
-                    <canvas id="salesChart"></canvas>
-                </div>
-                <div class="chart-container2 card">
-                    <h5 class="text-center mt-3">Pendapatan</h5>
-                    <canvas id="incomeChart"></canvas>
-                    <div class="legend-container">
-                        <span style="color: green">Offline</span>
-                        <span style="color: orange">Online</span>
-                        <span style="color: blue">Rata-Rata</span>
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Statistik Penjualan</h5>
+                        <div class="chart-container">
+                            <canvas id="salesChart"></canvas>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="dropdown-container">
-                <select class="custom-select" style="width: 200px">
-                    <option selected>Bulanan</option>
-                    <option value="1">Mingguan</option>
-                    <option value="2">Harian</option>
-                </select>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Pendapatan</h5>
+                        <div class="pie-chart-container">
+                            <canvas id="revenueChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Order List</h5>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th>ID</th>
+                                    <th>Date</th>
+                                    <th>Customer Name</th>
+                                    <th>Location</th>
+                                    <th>Amount</th>
+                                    <th>Status Order</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>#12594</td>
+                                    <td>Dec 1, 2021</td>
+                                    <td>Frank Murlo</td>
+                                    <td>312 S Wilmette Ave</td>
+                                    <td>$847.69</td>
+                                    <td>
+                                        <span class="badge bg-success"
+                                            >New Order</span
+                                        >
+                                    </td>
+                                    <td>...</td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>#12490</td>
+                                    <td>Nov 15, 2021</td>
+                                    <td>Thomas Bleir</td>
+                                    <td>Lathrop Ave, Harvey</td>
+                                    <td>$477.14</td>
+                                    <td>
+                                        <span class="badge bg-warning"
+                                            >On Delivery</span
+                                        >
+                                    </td>
+                                    <td>...</td>
+                                </tr>
+                                <tr>
+                                    <td>3</td>
+                                    <td>#12306</td>
+                                    <td>Nov 02, 2021</td>
+                                    <td>Bill Norton</td>
+                                    <td>5685 Bruce Ave, Portage</td>
+                                    <td>$477.14</td>
+                                    <td>
+                                        <span class="badge bg-warning"
+                                            >On Delivery</span
+                                        >
+                                    </td>
+                                    <td>...</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
     <script>
-        const salesCtx = document.getElementById("salesChart").getContext("2d");
-        const salesChart = new Chart(salesCtx, {
-            type: "line",
-            data: {
-                labels: ["Jan", "Feb", "Mar", "Apr", "Mei", "Jun", "Jul"],
-                datasets: [
-                    {
-                        label: "Pembelian Offline",
-                        backgroundColor: "rgba(0, 123, 255, 0.2)",
-                        borderColor: "rgba(0, 123, 255, 1)",
-                        data: [20, 30, 40, 50, 60, 70, 80],
-                        fill: true,
-                    },
-                    {
-                        label: "Pembelian Online",
-                        backgroundColor: "rgba(255, 159, 64, 0.2)",
-                        borderColor: "rgba(255, 159, 64, 1)",
-                        data: [30, 40, 20, 60, 80, 50, 70],
-                        fill: true,
-                    },
-                ],
-            },
-            options: {
-                responsive: true,
-                plugins: {
-                    legend: {
-                        display: false,
-                    },
-                    tooltip: {
-                        callbacks: {
-                            label: function (context) {
-                                let label = context.dataset.label || "";
-                                if (label) {
-                                    label += ": ";
-                                }
-                                label += "$" + context.parsed.y.toFixed(2);
-                                return label;
-                            },
+        document.addEventListener("DOMContentLoaded", (event) => {
+            const salesCtx = document
+                .getElementById("salesChart")
+                .getContext("2d");
+            const salesChart = new Chart(salesCtx, {
+                type: "line",
+                data: {
+                    labels: ["Jan", "Feb", "Mar", "Apr", "Mei", "Jun", "Jul"],
+                    datasets: [
+                        {
+                            label: "Pembelian Offline",
+                            data: [30, 20, 50, 60, 70, 60, 80],
+                            borderColor: "blue",
+                            backgroundColor: "rgba(0, 0, 255, 0.1)",
+                        },
+                        {
+                            label: "Pembelian Online",
+                            data: [20, 30, 40, 50, 60, 50, 70],
+                            borderColor: "orange",
+                            backgroundColor: "rgba(255, 165, 0, 0.1)",
+                        },
+                    ],
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true,
                         },
                     },
                 },
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        ticks: {
-                            callback: function (value) {
-                                return "$" + value;
-                            },
-                        },
-                    },
-                },
-            },
-        });
+            });
 
-        const incomeCtx = document
-            .getElementById("incomeChart")
-            .getContext("2d");
-        const incomeChart = new Chart(incomeCtx, {
-            type: "doughnut",
-            data: {
-                labels: ["Offline", "Online", "Rata-Rata"],
-                datasets: [
-                    {
-                        data: [30000, 40000, 20000],
-                        backgroundColor: [
-                            "rgb(0, 123, 255)",
-                            "rgb(255, 159, 64)",
-                            "rgb(75, 192, 192)",
-                        ],
-                        hoverOffset: 4,
-                    },
-                ],
-            },
-            options: {
-                responsive: true,
-                plugins: {
-                    legend: {
-                        display: false,
-                    },
+            const revenueCtx = document
+                .getElementById("revenueChart")
+                .getContext("2d");
+            const revenueChart = new Chart(revenueCtx, {
+                type: "doughnut",
+                data: {
+                    labels: ["Offline", "Online", "Rata-Rata"],
+                    datasets: [
+                        {
+                            label: "Pendapatan",
+                            data: [300, 150, 100],
+                            backgroundColor: ["green", "orange", "blue"],
+                        },
+                    ],
                 },
-            },
+            });
         });
     </script>
 </div>
