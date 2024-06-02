@@ -54,7 +54,7 @@ class ProdukController extends Controller
             'kategori' => $request->kategori,
         ]);
 
-        return redirect()->route('produk.index')->with('success');
+        return redirect()->route('produk.index')->with('success'  );
     }
 
     public function edit(Produk $produk)

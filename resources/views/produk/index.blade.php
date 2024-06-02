@@ -1,4 +1,3 @@
-
 @extends('layouts.app')
 
 @section('content')
@@ -6,7 +5,7 @@
         <div class="search-bar">
             <form action="{{ route('produk.search') }}" method="GET"></form>
             <input type="text" placeholder="Cari Stok" class="search-input">
-            <button class="search-button">
+            <button type="button" class="search-button">
                 <i class="fas fa-search"></i>
             </button>
 
@@ -19,17 +18,18 @@
             <h3>Filter Kategori</h3>
             <form action="{{ route('produk.index') }}" method="GET" class="filter-form">
                 <label>
-                    <input type="checkbox" name="kategori[]" value="baju">
-                    Baju
+                Baju
+                    <input type="checkbox" name="kategori[]" value="baju">  
                 </label>
                 <label>
+                Celana
                     <input type="checkbox" name="kategori[]" value="celana">
-                    Celana
                 </label>
                 <label>
+                Aksesoris
                     <input type="checkbox" name="kategori[]" value="aksesoris">
-                    Aksesoris
                 </label>
+                
                 <div class="filter-menu-buttons">
                     <button type="submit" class="done-btn">Simpan</button>
                     <button type="reset" class="clear-btn" onclick="resetFilter()">Hapus Filter</button>
@@ -86,6 +86,7 @@
     </div>
 
     <script>
+        // TAMBAH STOCK
         function changeQuantity(button, change) {
             let quantityElement = button.parentNode.querySelector('.quantity');
             let currentQuantity = parseInt(quantityElement.textContent);
@@ -99,15 +100,59 @@
             }
         }
 
+        // FILTER
+
         function toggleFilterMenu() {
             let filterMenu = document.querySelector('.filter-menu');
             filterMenu.style.display = filterMenu.style.display === 'block' ? 'none' : 'block';
         }
+        
+        function clearFilters() {
+            let checkboxes = document.querySelectorAll('.filter-menu input[type="checkbox"]');
+            checkboxes.forEach(checkbox => checkbox.checked = false);
+        }
+
+        function applyFilters() {
+            let checkboxes = document.querySelectorAll('.filter-menu input[type="checkbox"]');
+            let filters = [];
+            checkboxes.forEach(checkbox => {
+                if (checkbox.checked) {
+                    filters.push(checkbox.value);
+                }
+            });
+            console.log('Selected filters:', filters);
+            toggleFilterMenu();
+        }
+
+        document.addEventListener('click', function(event) {
+            let filterMenu = document.getElementById('filterMenu');
+            let filterButton = document.querySelector('.filter-button');
+            if (!filterMenu.contains(event.target) && !filterButton.contains(event.target)) {
+                filterMenu.style.display = 'none';
+            }
+        });
 
         function resetFilter() {
             document.querySelectorAll('.filter-form input[type="checkbox"]').forEach(checkbox => {
                 checkbox.checked = false;
             });
         }
+
+        //SEARCH
+        document.addEventListener('DOMContentLoaded', function() {
+    let searchButton = document.querySelector('.search-bar .search-button');
+    let searchInput = document.querySelector('.search-bar .search-input');
+
+    searchButton.addEventListener('click', function() {
+        let searchValue = searchInput.value.trim();
+        if (searchValue !== '') {
+            window.location.href = "{{ route('produk.index') }}?search=" + encodeURIComponent(searchValue);
+        } else {
+            alert('Masukkan kata kunci pencarian.');
+        }
+    });
+});
+
+
     </script>
-@endsection
+    @endsection

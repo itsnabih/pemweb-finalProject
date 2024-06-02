@@ -94,42 +94,7 @@
         max-height: 400% !important;
     }
 </style>
-<!-- searchbar, button search-->
-<div class="search-bar">
-    <form action="{{ route('produk.search') }}" method="GET"></form>
-    <input type="text" placeholder="Cari Stok" class="search-input" />
-    <button class="search-button">
-        <i class="fas fa-search"></i>
-    </button>
 
-    <!-- filter-->
-    <button class="filter-button" onclick="toggleFilterMenu()">
-        <i class="fas fa-filter"></i>
-    </button>
-</div>
-<!-- <div class="filter-menu">
-            <h3>Filter Kategori</h3>
-            <form action="{{ route('produk.index') }}" method="GET" class="filter-form">
-                <label>
-                    <input type="checkbox" name="kategori[]" value="baju">
-                    Baju
-                </label>
-                <label>
-                    <input type="checkbox" name="kategori[]" value="celana">
-                    Celana
-                </label>
-                <label>
-                    <input type="checkbox" name="kategori[]" value="aksesoris">
-                    Aksesoris
-                </label>
-                <div class="filter-menu-buttons">
-                    <button type="submit" class="done-btn">Simpan</button>
-                    <button type="reset" class="clear-btn" onclick="resetFilter()">Hapus Filter</button>
-                </div>
-            </form>
-        </div> -->
-
-<!-- Section statistik -->
 <div class="container mt-5">
     <div class="row">
         <div class="col-md-4">
