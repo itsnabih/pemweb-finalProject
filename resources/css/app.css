@@ -1,1 +1,16 @@
 @import "~bootstrap/scss/bootstrap";
+/* resources/css/app.css */
+body,
+div {
+    font-family: "Poppins", sans-serif;
+}
+
+/* Jika Anda ingin menerapkan font ini ke elemen lain, seperti heading atau paragraf, tambahkan juga gaya ini */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: "Poppins", sans-serif;
+}
