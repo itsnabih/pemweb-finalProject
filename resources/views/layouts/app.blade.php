@@ -5,26 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Produk Management</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <link
-    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-    rel="stylesheet"
-    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
-    crossorigin="anonymous"
-    />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
-    <script
-    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-    crossorigin="anonymous"
-    ></script>
     <style>
-        *{
-            font-family: "Poppins", sans-serif;
-        }
-        
         body {
+            font-family: Arial, sans-serif;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -35,7 +18,7 @@
         .header {
             width: 100%;
             max-width: 960px;
-            margin: 0 auto;
+            margin: 20px;
             padding: 20px;
             display: flex;
             flex-direction: column;
@@ -48,7 +31,7 @@
             justify-content: center;
             width: 244px;
             height: 50px;
-            margin-bottom: 10px;
+            margin: 40px;
         }
 
         .logo-image {
@@ -104,6 +87,48 @@
             color: #fff;
         }
 
+        .filter-menu {
+            display: none;
+            position: absolute;
+            top: 190px;
+            right: 278px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .filter-menu h3 {
+            margin-top: 0;
+        }
+
+        .filter-menu label {
+            display: flex; 
+            align-items: center; 
+            justify-content: space-between; 
+            margin-bottom: 10px;
+            padding-right: 10px; 
+        }
+
+        .filter-menu button {
+            margin-top: 10px;
+            padding: 5px 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .filter-menu .clear-btn {
+            background-color: #f0f0f0;
+            margin-right: 10px;
+        }
+
+        .filter-menu .done-btn {
+            background-color: #000;
+            color: #fff;
+        }
+
         .product-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -118,6 +143,8 @@
             border-bottom: 1px solid #eee;
             padding-bottom: 20px;
             margin-bottom: 20px;
+            object-fit: cover;
+            height: 200px;
         }
 
         .product-title {
@@ -198,56 +225,23 @@
             }
         }
 
-        .pagination-container {
+        .add-product-container {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin: 50px; /* Menengahkan kontainer secara vertikal */
-            max-width: 100%;
+            position: absolute;
+            right: 0;
         }
 
-        .pagination {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .pagination-btn {
-            background-color: white;
-            border: 1px solid black;
-            padding: 10px 15px;
-            margin: 0 5px;
-            cursor: pointer;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .pagination-btn.active {
-            background-color: black;
-            color: white;
-        }
-
-        .add-stock-container {
-            margin-left: auto; /* Memposisikan kontainer tombol add-stock ke paling kanan */
-        }
-
-        .add-stock-btn {
-            width: 300px;
+        .add-product-btn {
+            width: 130px;
             height: 40px;
             background-color: white;
             border: 1px solid black;
             padding: 5px 10px;
             cursor: pointer;
             border-radius: 5px;
-            margin-left: 10px;
-        }
-
-        .add-stock-btn:hover {
-            background-color: #f0f0f0;
+            justify-content: center;
+            align-items: center;
+            text-decoration: none;
         }
 
         .footer {
@@ -277,7 +271,7 @@
         }
 
         .footer-logo img {
-            width: 150px;
+            width: 70%;
         }
 
         .footer-tagline {
@@ -346,8 +340,12 @@
 <body>
     <header class="header">
         <div class="logo">
-            <img src="logo.png" alt="UB Merch Logo" class="logo-image">
-        </div>
+                <img
+                    src="{{ asset('logo.png') }}"
+                    alt="UB Merch Logo"
+                    class="logo-image"
+                />
+            </div>
         <nav class="nav-links">
             <a href="/produk">Lihat Stok</a>
             <a href="/statistik">Statistik Penjualan</a>
@@ -359,7 +357,11 @@
     <footer class="footer">
         <div class="footer-content">
             <div class="footer-logo">
-                <img src="logo.png" alt="UB Merch Logo" class="footer-logo-image">
+                <img
+                    src="{{ asset('logo.png') }}"
+                    alt="UB Merch Logo"
+                    class="logo-image"
+                />
             </div>
             <div class="footer-contact">
                 <h3>Contact</h3>

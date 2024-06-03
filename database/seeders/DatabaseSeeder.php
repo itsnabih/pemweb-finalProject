@@ -3,8 +3,10 @@
 namespace Database\Seeders;
 
 use App\Models\User;
+use App\Models\Produk;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class DatabaseSeeder extends Seeder
 {
@@ -16,7 +18,6 @@ class DatabaseSeeder extends Seeder
         // User::factory(10)->create();
 
         DB::table('produk')->insert([
-            'id' => 1,
             'namaProduk' => 'Baju UB',
             'stokProduk' => 67,
             'fotoProduk' => 'a',
