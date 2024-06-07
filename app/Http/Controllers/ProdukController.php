@@ -5,29 +5,39 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Produk;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
 
 class ProdukController extends Controller
 {
-   public function index(Request $request)
-{
-    $query = Produk::query();
-
-    // Pencarian berdasarkan nama produk
-    if ($request->has('search')) {
-        $search = $request->input('search');
-        $query->where('namaProduk', 'like', '%' . $search . '%');
+    public function index(Request $request)
+    {
+        if (!Auth::check()) {
+            return redirect(route('login'));
+        }
+    
+        $query = Produk::query();
+    
+        // Pencarian berdasarkan nama produk
+        if ($request->has('search')) {
+            $search = $request->input('search');
+            $query->where('namaProduk', 'like', '%' . $search . '%');
+        }
+    
+        // Filter berdasarkan kategori
+        if ($request->has('kategori')) {
+            $kategori = $request->input('kategori');
+            // Pastikan kategori adalah array
+            if (!is_array($kategori)) {
+                $kategori = [$kategori];
+            }
+            $query->whereIn('kategori', $kategori);
+        }
+    
+        $produk = $query->get();
+    
+        return view('produk.index', compact('produk'));
     }
-
-    // Filter berdasarkan kategori
-    if ($request->has('kategori')) {
-        $kategori = $request->input('kategori');
-        $query->whereIn('kategori', $kategori);
-    }
-
-    $produk = $query->get();
-
-    return view('produk.index', compact('produk'));
-}
+    
 
     public function create()
     {
