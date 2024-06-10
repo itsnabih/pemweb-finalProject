@@ -6,6 +6,8 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 
+# User Guide to Run this codes 
+This Content have some real secret OAuth, It's used for testing only and will be close after grading of this Project
 ## How to use
     1. Custom the .env and config/services.php to setup and run code (scorll to the bottom)
     2. use this command :  'php artisan storage:link' to import image resources
@@ -130,3 +132,4 @@
     ];
 
 ## If you have any more problem, feel free to contact us
+Contact me via email : ahmadnabih0903@gmail.com
